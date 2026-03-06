@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dompet</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0A1628;
+      --blue: #1565C0;
+      --blue-mid: #1976D2;
+      --blue-light: #42A5F5;
+      --accent: #00E5FF;
+      --surface: #F5F8FF;
+      --white: #FFFFFF;
+      --text-muted: #5A6A85;
+      --border: #E2EAF4;
+      --sidebar-w: 230px;
+      --navbar-h: 68px;
+      --shadow: 0 2px 16px rgba(21, 101, 192, 0.07);
+      --shadow-lg: 0 8px 40px rgba(10, 22, 40, 0.11);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--surface);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 300;
+      background: rgba(10, 22, 40, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      height: var(--navbar-h);
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+    }
+
+    .nav-inner {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      font-family: 'Fraunces', serif;
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: white;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-brand span {
+      color: var(--accent);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-bell {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.4rem 0.5rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-bell:hover {
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.3rem 0.75rem 0.3rem 0.4rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-profile:hover {
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .nav-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--navy);
+      border: 2px solid rgba(0, 229, 255, 0.35);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .nav-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .nav-profile-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 0.3rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.1rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: fixed;
+      top: var(--navbar-h);
+      left: 0;
+      bottom: 0;
+      width: var(--sidebar-w);
+      background: white;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      z-index: 200;
+      overflow-y: auto;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .sidebar-nav {
+      padding: 1rem 0.75rem;
+      flex: 1;
+    }
+
+    .sidebar-section {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(90, 106, 133, 0.6);
+      padding: 0 0.6rem;
+      margin: 1rem 0 0.4rem;
+    }
+
+    .sidebar-section:first-child {
+      margin-top: 0;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.58rem 0.75rem;
+      border-radius: 10px;
+      font-size: 0.855rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.18s;
+      margin-bottom: 0.1rem;
+    }
+
+    .sidebar-link i {
+      font-size: 0.9rem;
+      width: 16px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .sidebar-link:hover {
+      background: var(--surface);
+      color: var(--navy);
+    }
+
+    .sidebar-link.active {
+      background: rgba(21, 101, 192, 0.09);
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .sidebar-link.active i {
+      color: var(--blue);
+    }
+
+    .sidebar-link.danger {
+      color: #DC2626;
+    }
+
+    .sidebar-link.danger:hover {
+      background: #FEF2F2;
+      color: #B91C1C;
+    }
+
+    .sidebar-foot {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.68rem;
+      color: var(--border);
+    }
+
+    /* MAIN */
+    .main {
+      margin-left: var(--sidebar-w);
+      padding-top: var(--navbar-h);
+      min-height: 100vh;
+    }
+
+    .main-body {
+      padding: 2rem 2rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .page-header-title h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 0.2rem;
+    }
+
+    .page-header-title p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .btn-outline {
+      background: white;
+      border: 1.5px solid var(--border);
+      color: var(--navy);
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+      border: none;
+      color: white;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.5rem 1.1rem;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(21, 101, 192, 0.3);
+    }
+
+    .btn-sm {
+      padding: 0.38rem 0.85rem;
+      font-size: 0.78rem;
+    }
+
+    /* CARD */
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.5rem;
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* TOTAL SALDO CARD */
+    .saldo-card {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a3560 100%);
+      border: none;
+      border-radius: 18px;
+      padding: 1.75rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .saldo-card::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: rgba(0, 229, 255, 0.07);
+    }
+
+    .saldo-card::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      right: 60px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .saldo-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    .saldo-value {
+      font-family: 'Fraunces', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: white;
+      margin-bottom: 0.35rem;
+      line-height: 1.1;
+    }
+
+    .saldo-sub {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 1.5rem;
+    }
+
+    .saldo-actions {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .saldo-btn {
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.45rem 1rem;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .saldo-btn.solid {
+      background: var(--accent);
+      border: none;
+      color: var(--navy);
+    }
+
+    .saldo-btn.solid:hover {
+      background: #33eaff;
+      transform: translateY(-1px);
+    }
+
+    .saldo-btn.ghost {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .saldo-btn.ghost:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* BANK CARDS */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .bank-card {
+      border-radius: 16px;
+      padding: 1.25rem 1.35rem;
+      position: relative;
+      overflow: hidden;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+
+    .bank-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(10, 22, 40, 0.15);
+    }
+
+    .bank-card::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .bank-card.bni {
+      background: linear-gradient(135deg, #1565C0, #0D47A1);
+    }
+
+    .bank-card.bca {
+      background: linear-gradient(135deg, #0077B6, #023E8A);
+    }
+
+    .bank-card.mandiri {
+      background: linear-gradient(135deg, #1B4F72, #154360);
+    }
+
+    .bank-card-balance {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .bank-card-number {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.55);
+      letter-spacing: 0.08em;
+      font-family: 'Courier New', monospace;
+    }
+
+    .bank-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .bank-card-exp {
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .bank-card-name {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: 0.05em;
+    }
+
+    /* TABLE */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead tr {
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    thead th {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      padding: 0 0.75rem 0.7rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--surface);
+      transition: background 0.15s;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--surface);
+    }
+
+    tbody td {
+      padding: 0.85rem 0.75rem;
+      font-size: 0.84rem;
+      color: var(--navy);
+      vertical-align: middle;
+    }
+
+    .tx-with-icon {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .tx-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .tx-name {
+      font-weight: 600;
+      font-size: 0.845rem;
+    }
+
+    .tx-cat {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .tx-amount {
+      font-family: 'Fraunces', serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .tx-amount.out {
+      color: #DC2626;
+    }
+
+    .tx-amount.in {
+      color: #16A34A;
+    }
+
+    .method {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: 'Courier New', monospace;
+    }
+
+    .date-cell {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .badge-pill {
+      font-size: 0.67rem;
+      font-weight: 700;
+      padding: 0.22rem 0.65rem;
+      border-radius: 100px;
+      display: inline-block;
+    }
+
+    .badge-pill.sub {
+      background: rgba(21, 101, 192, 0.08);
+      color: var(--blue);
+    }
+
+    .badge-pill.shop {
+      background: rgba(251, 146, 60, 0.12);
+      color: #EA580C;
+    }
+
+    .badge-pill.food {
+      background: rgba(52, 211, 153, 0.12);
+      color: #059669;
+    }
+
+    .see-all {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--blue);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .see-all:hover {
+      text-decoration: underline;
+    }
+
+    /* DONUT */
+    .donut-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .donut {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: conic-gradient(var(--blue) 0% 50%, #FB923C 50% 80%, #00BCD4 80% 90%, #DC2626 90% 95%, #34D399 95% 100%);
+      position: relative;
+      margin: 0.75rem auto 1rem;
+      flex-shrink: 0;
+    }
+
+    .donut-hole {
+      width: 112px;
+      height: 112px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .donut-val {
+      font-family: 'Fraunces', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    .donut-sub {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    .budget-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .budget-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .budget-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .budget-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--navy);
+      flex: 1;
+    }
+
+    .budget-pct {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    /* 2 COL LAYOUT */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 310px;
+      gap: 1.25rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--navy);
+      color: rgba(255, 255, 255, 0.6);
+      padding: 3rem 2rem 2rem;
+      margin-left: var(--sidebar-w);
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: white;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-brand span {
+      color: var(--accent);
+    }
+
+    .footer-brand-desc {
+      font-size: 0.84rem;
+      line-height: 1.65;
+      max-width: 280px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
+    }
+
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .social-btn:hover {
+      background: rgba(0, 229, 255, 0.12);
+      border-color: rgba(0, 229, 255, 0.3);
+      color: var(--accent);
+    }
+
+    .footer-col-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.84rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    /* Sidebar overlay */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 22, 40, 0.5);
+      z-index: 199;
+      backdrop-filter: blur(2px);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 22, 40, 0.98);
+      z-index: 2000;
+      padding: 2rem;
+      flex-direction: column;
+      gap: 1rem;
+      overflow-y: auto;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .mobile-menu a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1100px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --sidebar-w: 0px;
+      }
+
+      .sidebar {
+        transform: translateX(-230px);
+        width: 230px;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay.open {
+        display: block;
+      }
+
+      footer {
+        margin-left: 0;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .main-body {
+        padding: 1.25rem 1rem 3rem;
+      }
+
+      .page-header {
+        flex-direction: column;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <button class="hamburger" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+        <a class="nav-brand">NA<span>LLET</span></a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="beranda2.html">Beranda</a></li>
+        <li><a href="berita2.html">Berita Terbaru</a></li>
+        <li><a href="kontak2.html">Kontak Kami</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="nav-bell"><i class="bi bi-bell-fill"></i></button>
+        <a href="#" class="nav-profile">
+          <div class="nav-avatar">
+            <img src="saya.jpg" alt="Diana" onerror="this.style.display='none';this.parentElement.textContent='DT'">
+          </div>
+          <div><span class="nav-profile-name">Diana Tri Asih</span></div>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" onclick="document.getElementById('mobileMenu').classList.remove('open')"><i
+        class="bi bi-x"></i></button>
+    <a style="font-family:'Fraunces',serif;font-size:1.5rem;border-bottom:none;margin-bottom:0.5rem;">NALLET</a>
+    <a href="beranda2.html">Beranda</a>
+    <a href="berita2.html">Berita Terbaru</a>
+    <a href="kontak2.html">Kontak Kami</a>
+  </div>
+
+  <!-- SIDEBAR OVERLAY -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Menu Utama</div>
+      <a href="dashboard.html" class="sidebar-link">
+        <i class="bi bi-grid-fill"></i> Dashboard
+      </a>
+      <a href="transaksi.html" class="sidebar-link">
+        <i class="bi bi-arrow-left-right"></i> Transaksi
+      </a>
+      <a href="dompet.html" class="sidebar-link active">
+        <i class="bi bi-wallet2"></i> Dompet
+      </a>
+      <a href="tujuan.html" class="sidebar-link">
+        <i class="bi bi-bullseye"></i> Tujuan
+      </a>
+      <a href="anggaran.html" class="sidebar-link">
+        <i class="bi bi-bar-chart-fill"></i> Anggaran
+      </a>
+      <div class="sidebar-section">Lainnya</div>
+      <a href="beranda.html" class="sidebar-link danger">
+        <i class="bi bi-box-arrow-right"></i> Keluar
+      </a>
+    </nav>
+    <div class="sidebar-foot">NALLET v1.0 · © 2026</div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="main-body">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-header-title">
+          <h2>Dompet</h2>
+          <p>Ringkasan saldo dan akun keuanganmu.</p>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary"><i class="bi bi-plus-lg"></i> Tambah akun baru</button>
+        </div>
+      </div>
+
+      <!-- Top Row Saldo Card + Bank Cards -->
+      <div style="display:grid;grid-template-columns:300px 1fr;gap:1.25rem;align-items:start;">
+
+        <!-- Total Saldo -->
+        <div class="saldo-card">
+          <div>
+            <div class="saldo-label">Total Saldo</div>
+            <div class="saldo-value">Rp100 Jt</div>
+            <div class="saldo-sub">Total saldo di semua akun</div>
+          </div>
+          <div class="saldo-actions">
+            <button class="saldo-btn solid"><i class="bi bi-arrow-left-right"></i> Transfer</button>
+            <button class="saldo-btn ghost"><i class="bi bi-download"></i> Request</button>
+          </div>
+        </div>
+
+        <!-- Akun Bank -->
+        <div>
+          <div
+            style="font-size:0.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.85rem;">
+            Akun Anda</div>
+          <div class="cards-grid">
+
+            <!-- BNI -->
+            <div class="bank-card bni">
+              <div>
+                <div class="bank-card-balance">Rp55.000.000</div>
+              </div>
+              <div>
+                <div class="bank-card-number">•• •• •• 3254</div>
+                <div class="bank-card-footer" style="margin-top:0.65rem;">
+                  <div class="bank-card-exp">Exp: 12/30</div>
+                  <div class="bank-card-name">BNI</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BCA -->
+            <div class="bank-card bca">
+              <div>
+                <div class="bank-card-balance">Rp30.000.000</div>
+              </div>
+              <div>
+                <div class="bank-card-number">•• •• •• 2154</div>
+                <div class="bank-card-footer" style="margin-top:0.65rem;">
+                  <div class="bank-card-exp">Exp: 05/32</div>
+                  <div class="bank-card-name">BCA</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MANDIRI -->
+            <div class="bank-card mandiri">
+              <div>
+                <div class="bank-card-balance">Rp15.000.000</div>
+              </div>
+              <div>
+                <div class="bank-card-number">•• •• •• 4156</div>
+                <div class="bank-card-footer" style="margin-top:0.65rem;">
+                  <div class="bank-card-exp">Exp: 11/32</div>
+                  <div class="bank-card-name">MANDIRI</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row Transaksi Terbaru + Statistik -->
+      <div class="two-col">
+
+        <!-- Transaksi Terbaru -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Transaksi Terbaru</div>
+            <a href="transaksi.html" class="see-all">Lihat semua <i class="bi bi-arrow-right"></i></a>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nama Pembayaran</th>
+                  <th>Tanggal</th>
+                  <th>Jumlah</th>
+                  <th>Metode</th>
+                  <th>Kategori</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="tx-with-icon">
+                      <div class="tx-icon" style="background:rgba(21,101,192,0.1);color:var(--blue);"><i
+                          class="bi bi-play-circle-fill"></i></div>
+                      <div>
+                        <div class="tx-name">YouTube Premium</div>
+                        <div class="tx-cat">Berlangganan bulanan</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="date-cell">05 Mar · 20:30</div>
+                  </td>
+                  <td>
+                    <div class="tx-amount out">-Rp10.000</div>
+                  </td>
+                  <td>
+                    <div class="method">BNI ••3254</div>
+                  </td>
+                  <td><span class="badge-pill sub">Berlangganan</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="tx-with-icon">
+                      <div class="tx-icon" style="background:rgba(251,146,60,0.12);color:#EA580C;"><i
+                          class="bi bi-bag"></i></div>
+                      <div>
+                        <div class="tx-name">Reserved</div>
+                        <div class="tx-cat">Pembelian online</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="date-cell">05 Mar · 15:00</div>
+                  </td>
+                  <td>
+                    <div class="tx-amount out">-Rp150.000</div>
+                  </td>
+                  <td>
+                    <div class="method">BCA ••2154</div>
+                  </td>
+                  <td><span class="badge-pill shop">Belanja</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="tx-with-icon">
+                      <div class="tx-icon" style="background:rgba(52,211,153,0.12);color:#059669;"><i
+                          class="bi bi-egg-fried"></i></div>
+                      <div>
+                        <div class="tx-name">Yaposhka</div>
+                        <div class="tx-cat">Restoran</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="date-cell">05 Mar · 10:00</div>
+                  </td>
+                  <td>
+                    <div class="tx-amount out">-Rp80.000</div>
+                  </td>
+                  <td>
+                    <div class="method">BCA ••2154</div>
+                  </td>
+                  <td><span class="badge-pill food">Makanan</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Statistik / Donut -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Statistik Pengeluaran</div>
+            <a href="anggaran.html" class="see-all">Detail <i class="bi bi-arrow-right"></i></a>
+          </div>
+          <div class="donut-wrap">
+            <div class="donut">
+              <div class="donut-hole">
+                <div class="donut-val">Rp5 Jt</div>
+                <div class="donut-sub">Total bulan ini</div>
+              </div>
+            </div>
+            <div class="budget-list">
+              <div class="budget-item">
+                <div class="budget-dot" style="background:var(--blue);"></div>
+                <div class="budget-name">Makanan</div>
+                <div class="budget-pct">50%</div>
+              </div>
+              <div class="budget-item">
+                <div class="budget-dot" style="background:#FB923C;"></div>
+                <div class="budget-name">Belanja</div>
+                <div class="budget-pct">30%</div>
+              </div>
+              <div class="budget-item">
+                <div class="budget-dot" style="background:#00BCD4;"></div>
+                <div class="budget-name">Kesehatan</div>
+                <div class="budget-pct">10%</div>
+              </div>
+              <div class="budget-item">
+                <div class="budget-dot" style="background:#DC2626;"></div>
+                <div class="budget-name">Kecantikan</div>
+                <div class="budget-pct">5%</div>
+              </div>
+              <div class="budget-item">
+                <div class="budget-dot" style="background:#34D399;"></div>
+                <div class="budget-name">Tabungan</div>
+                <div class="budget-pct">5%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /two-col -->
+
+    </div><!-- /main-body -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <span class="footer-brand">NA<span>LLET</span></span>
+          <p class="footer-brand-desc">Platform sistem informasi keuangan terpercaya yang membantu Anda mengelola
+            keuangan dengan lebih mudah, cepat, dan aman.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigasi</div>
+          <ul class="footer-links">
+            <li><a href="beranda2.html">Beranda</a></li>
+            <li><a href="berita2.html">Berita Terbaru</a></li>
+            <li><a href="kontak2.html">Kontak Kami</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Produk</div>
+          <ul class="footer-links">
+            <li><a href="#">Laporan Keuangan</a></li>
+            <li><a href="#">Pengelolaan Anggaran</a></li>
+            <li><a href="#">Analisis Data</a></li>
+            <li><a href="#">Keamanan Data</a></li>
+            <li><a href="#">Notifikasi Cerdas</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 NALLET. Semua Hak Dilindungi.</p>
+        <p>Didesain oleh: <strong style="color:rgba(255,255,255,0.75);">Diana Tri Asih</strong></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('open');
+    }
+
+    // Fade-in animation
+    const cards = document.querySelectorAll('.card, .saldo-card, .bank-card');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }, i * 55);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.06 });
+    cards.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(12px)';
+      io.observe(el);
+    });
+  </script>
+
+</body>
+
+</html>

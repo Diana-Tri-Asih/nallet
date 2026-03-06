@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NALLET</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0A1628;
+      --blue: #1565C0;
+      --blue-mid: #1976D2;
+      --blue-light: #42A5F5;
+      --accent: #00E5FF;
+      --accent2: #FFD600;
+      --surface: #F5F8FF;
+      --white: #FFFFFF;
+      --text-muted: #5A6A85;
+      --border: #E2EAF4;
+      --card-bg: #FFFFFF;
+      --shadow: 0 4px 32px rgba(21, 101, 192, 0.10);
+      --shadow-lg: 0 16px 64px rgba(10, 22, 40, 0.14);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--surface);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(10, 22, 40, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 0 2rem;
+      height: 68px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-inner {
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      font-family: 'Fraunces', serif;
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .nav-brand span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: var(--white);
+      padding: 0.45rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      border: none;
+      color: var(--navy);
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-accent:hover {
+      background: #33EAFF;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0, 229, 255, 0.35);
+    }
+
+    .btn-bell {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.1rem;
+      transition: color 0.2s;
+      padding: 0.3rem;
+    }
+
+    .btn-bell:hover {
+      color: var(--accent);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-size: 1.4rem;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--navy) 0%, #102040 60%, #0D3060 100%);
+    }
+
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 70% 30%, rgba(0, 229, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(21, 101, 192, 0.15) 0%, transparent 50%);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.7);
+      }
+    }
+
+    .hero-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title .highlight {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-primary-lg {
+      background: var(--accent);
+      color: var(--navy);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0.85rem 2rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .btn-primary-lg:hover {
+      background: #33EAFF;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 229, 255, 0.4);
+    }
+
+    .btn-outline-lg {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.75);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.85rem 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .btn-outline-lg:hover {
+      border-color: rgba(255, 255, 255, 0.5);
+      color: white;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .stat-num {
+      font-family: 'Fraunces', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .stat-num span {
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 500;
+    }
+
+    /* Hero Visual Card */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .dashboard-mock {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 420px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 32px 64px rgba(0, 0, 0, 0.3);
+      animation: floatCard 4s ease-in-out infinite;
+    }
+
+    @keyframes floatCard {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    .mock-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.2rem;
+    }
+
+    .mock-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .mock-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .mock-dot:nth-child(1) {
+      background: #FF5F57;
+    }
+
+    .mock-dot:nth-child(2) {
+      background: #FEBC2E;
+    }
+
+    .mock-dot:nth-child(3) {
+      background: #28C840;
+    }
+
+    .mock-title-bar {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.4);
+      font-weight: 600;
+    }
+
+    .mock-balance {
+      background: linear-gradient(135deg, var(--blue), var(--blue-light));
+      border-radius: 14px;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .mock-balance-label {
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.3rem;
+    }
+
+    .mock-balance-amount {
+      font-family: 'Fraunces', serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .mock-balance-change {
+      font-size: 0.78rem;
+      color: #A5F3A5;
+      margin-top: 0.25rem;
+    }
+
+    .mock-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .mock-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 0.8rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    .mock-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .mock-row-text {
+      flex: 1;
+    }
+
+    .mock-row-name {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 600;
+    }
+
+    .mock-row-date {
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .mock-row-amount {
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .text-green {
+      color: #4ADE80;
+    }
+
+    .text-red {
+      color: #F87171;
+    }
+
+    /* CAROUSEL (Slider Teks) */
+    .hero-slider {
+      background: var(--navy);
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .slider-track {
+      display: flex;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+
+    .slider-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem 2.5rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .slider-item i {
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* SECTIONS */
+    .section-wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: var(--blue);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* FITUR CARDS */
+    .features-section {
+      background: var(--surface);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--accent));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(21, 101, 192, 0.2);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(21, 101, 192, 0.1), rgba(0, 229, 255, 0.08));
+      border: 1px solid rgba(21, 101, 192, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: var(--blue);
+      margin-bottom: 1.2rem;
+    }
+
+    .feature-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.6rem;
+    }
+
+    .feature-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* KEUNTUNGAN */
+    .benefits-section {
+      background: white;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .benefit-card {
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.3s;
+    }
+
+    .benefit-card:nth-child(1) {
+      background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+      border: 1px solid #BFDBFE;
+    }
+
+    .benefit-card:nth-child(2) {
+      background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
+      border: 1px solid #BBF7D0;
+    }
+
+    .benefit-card:nth-child(3) {
+      background: linear-gradient(135deg, #FFF7ED, #FFEDD5);
+      border: 1px solid #FED7AA;
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .benefit-num {
+      font-family: 'Fraunces', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      opacity: 0.12;
+    }
+
+    .benefit-icon {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .benefit-card:nth-child(1) .benefit-icon {
+      color: var(--blue);
+    }
+
+    .benefit-card:nth-child(2) .benefit-icon {
+      color: #16A34A;
+    }
+
+    .benefit-card:nth-child(3) .benefit-icon {
+      color: #EA580C;
+    }
+
+    .benefit-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .benefit-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* TESTIMONI */
+    .testimonials-section {
+      background: var(--surface);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    .testi-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.6rem 1.8rem;
+      transition: all 0.3s;
+    }
+
+    .testi-card:hover {
+      border-color: rgba(21, 101, 192, 0.2);
+      box-shadow: var(--shadow);
+    }
+
+    .testi-stars {
+      color: var(--accent2);
+      font-size: 0.8rem;
+      margin-bottom: 0.8rem;
+      letter-spacing: 1px;
+    }
+
+    .testi-text {
+      font-size: 0.92rem;
+      color: var(--navy);
+      line-height: 1.65;
+      font-style: italic;
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .testi-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .av-1 {
+      background: linear-gradient(135deg, #1565C0, #42A5F5);
+    }
+
+    .av-2 {
+      background: linear-gradient(135deg, #9C27B0, #CE93D8);
+    }
+
+    .av-3 {
+      background: linear-gradient(135deg, #2E7D32, #81C784);
+    }
+
+    .av-4 {
+      background: linear-gradient(135deg, #E65100, #FFCC02);
+    }
+
+    .testi-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .testi-role {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* MAP & CONTACT */
+    .contact-section {
+      background: white;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 3rem;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(21, 101, 192, 0.1), rgba(0, 229, 255, 0.08));
+      border: 1px solid rgba(21, 101, 192, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .contact-text strong {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy);
+      display: block;
+    }
+
+    .contact-text p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .map-wrap {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .map-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 340px;
+    }
+
+    /* CTA BANNER */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy) 0%, #0D3060 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 80% 50%, rgba(0, 229, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 20% 50%, rgba(21, 101, 192, 0.15) 0%, transparent 50%);
+    }
+
+    .cta-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .cta-inner .section-title {
+      color: white;
+    }
+
+    .cta-inner .section-sub {
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--navy);
+      color: rgba(255, 255, 255, 0.6);
+      padding: 3rem 2rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: white;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-brand span {
+      color: var(--accent);
+    }
+
+    .footer-brand-desc {
+      font-size: 0.84rem;
+      line-height: 1.65;
+      max-width: 280px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
+    }
+
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .social-btn:hover {
+      background: rgba(0, 229, 255, 0.12);
+      border-color: rgba(0, 229, 255, 0.3);
+      color: var(--accent);
+    }
+
+    .footer-col-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.84rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 22, 40, 0.98);
+      z-index: 2000;
+      padding: 2rem;
+      flex-direction: column;
+      gap: 1rem;
+      overflow-y: auto;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .mobile-menu a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 600;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .mobile-cta {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 991px) {
+
+      .features-grid,
+      .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .nav-links,
+      .nav-right {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 3rem 1.5rem;
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+
+      .dashboard-mock {
+        max-width: 320px;
+      }
+
+      .hero-stats {
+        gap: 1.5rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+
+      .section-wrap {
+        padding: 3.5rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">NA<span>LLET</span></a>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Beranda</a></li>
+        <li><a href="berita.html">Berita Terbaru</a></li>
+        <li><a href="kontak.html">Kontak Kami</a></li>
+      </ul>
+      </li>
+      </ul>
+      <div class="nav-right">
+        <button class="btn-bell"><i class="bi bi-bell-fill"></i></button>
+        <a href="masuk.html" class="btn-ghost">Masuk</a>
+        <a href="daftar.html" class="btn-accent">Daftar Gratis</a>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()">
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+  </nav>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" onclick="toggleMenu()"><i class="bi bi-x"></i></button>
+    <a href="#"
+      style="font-family: 'Fraunces', serif; font-size: 1.5rem; border-bottom: none; margin-bottom: 0.5rem;">NALLET</a>
+    <a href="#">Beranda</a>
+    <a href="berita.html">Berita Terbaru</a>
+    <a href="kontak.html">Kontak Kami</a>
+    <div class="mobile-cta">
+      <a href="masuk.html" class="btn-ghost" style="flex:1; text-align:center;">Masuk</a>
+      <a href="daftar.html" class="btn-accent" style="flex:1; text-align:center;">Daftar</a>
+    </div>
+  </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-badge"><i class="bi bi-lightning-fill" style="font-size:0.7rem;"></i> Platform Keuangan #1
+        </div>
+        <h1 class="hero-title">
+          Kelola Keuangan Anda dengan <span class="highlight">Lebih Cerdas</span>
+        </h1>
+        <p class="hero-desc">
+          NALLET membantu Anda memantau arus kas, merencanakan anggaran, dan mencapai tujuan finansial dengan antarmuka
+          yang intuitif
+          dan analisis real-time.
+        </p>
+        <div class="hero-cta">
+          <a href="daftar.html" class="btn-primary-lg">
+            Mulai Gratis <i class="bi bi-arrow-right"></i>
+          </a>
+          <a href="#fitur" class="btn-outline-lg">
+            <i class="bi bi-play-circle"></i> Lihat Demo
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">10K<span>+</span></div>
+            <div class="stat-label">Pengguna Aktif</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">99<span>%</span></div>
+            <div class="stat-label">Kepuasan Pelanggan</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">24<span>/7</span></div>
+            <div class="stat-label">Dukungan Penuh</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="dashboard-mock">
+          <div class="mock-header">
+            <div class="mock-dots">
+              <div class="mock-dot"></div>
+              <div class="mock-dot"></div>
+              <div class="mock-dot"></div>
+            </div>
+            <div class="mock-title-bar">Dashboard Utama</div>
+          </div>
+          <div class="mock-balance">
+            <div class="mock-balance-label">Total Saldo</div>
+            <div class="mock-balance-amount">Rp 48.250.000</div>
+            <div class="mock-balance-change"><i class="bi bi-arrow-up-short"></i> +12.3% bulan ini</div>
+          </div>
+          <div class="mock-rows">
+            <div class="mock-row">
+              <div class="mock-icon" style="background:rgba(74,222,128,0.15);">💰</div>
+              <div class="mock-row-text">
+                <div class="mock-row-name">Pemasukan Gaji</div>
+                <div class="mock-row-date">1 Mar 2025</div>
+              </div>
+              <div class="mock-row-amount text-green">+Rp 12,5 Jt</div>
+            </div>
+            <div class="mock-row">
+              <div class="mock-icon" style="background:rgba(248,113,113,0.15);">🛒</div>
+              <div class="mock-row-text">
+                <div class="mock-row-name">Belanja Bulanan</div>
+                <div class="mock-row-date">3 Mar 2025</div>
+              </div>
+              <div class="mock-row-amount text-red">-Rp 2,1 Jt</div>
+            </div>
+            <div class="mock-row">
+              <div class="mock-icon" style="background:rgba(96,165,250,0.15);">📈</div>
+              <div class="mock-row-text">
+                <div class="mock-row-name">Investasi Reksa Dana</div>
+                <div class="mock-row-date">5 Mar 2025</div>
+              </div>
+              <div class="mock-row-amount text-green">+Rp 850 Rb</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Marquee -->
+  <div class="hero-slider">
+    <div class="slider-track">
+      <span class="slider-item"><i class="bi bi-check-circle-fill"></i>Laporan Real-time</span>
+      <span class="slider-item"><i class="bi bi-check-circle-fill"></i>Keamanan Data Tingkat Tinggi</span>
+      <span class="slider-item"><i class="bi bi-check-circle-fill"></i>Analisis Pengeluaran Cerdas</span>
+      <span class="slider-item"><i class="bi bi-check-circle-fill"></i>Sinkronisasi Multi-perangkat</span>
+      <span class="slider-item"><i class="bi bi-check-circle-fill"></i>Dukungan 24/7</span>
+      <span class="slider-item"><i class="bi bi-check-circle-fill"></i>Perencanaan Anggaran Otomatis</span>
+      <!-- Duplicate for loop -->
+      <span class="slider-item"><i class="bi bi-check-circle-fill"></i>Laporan Real-time</span>
+      <span class="slider-item"><i class="bi bi-check-circle-fill"></i>Keamanan Data Tingkat Tinggi</span>
+      <span class="slider-item"><i class="bi bi-check-circle-fill"></i>Analisis Pengeluaran Cerdas</span>
+      <span class="slider-item"><i class="bi bi-check-circle-fill"></i>Sinkronisasi Multi-perangkat</span>
+      <span class="slider-item"><i class="bi bi-check-circle-fill"></i>Dukungan 24/7</span>
+      <span class="slider-item"><i class="bi bi-check-circle-fill"></i>Perencanaan Anggaran Otomatis</span>
+    </div>
+  </div>
+  <!-- FITUR UNGGULAN -->
+  <section class="features-section" id="fitur">
+    <div class="section-wrap">
+      <div class="section-label">Fitur Unggulan</div>
+      <h2 class="section-title">Semua yang Anda Butuhkan<br>dalam Satu Platform</h2>
+      <p class="section-sub">Sistem informasi keuangan kami hadir dengan fitur-fitur canggih yang dirancang untuk
+        mempermudah pengelolaan keuangan Anda sehari-hari.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="bi bi-graph-up-arrow"></i></div>
+          <h3 class="feature-title">Laporan Keuangan Real-time</h3>
+          <p class="feature-desc">Dapatkan laporan keuangan secara langsung dengan data yang selalu diperbarui,
+            memudahkan analisis dan pengambilan keputusan bisnis yang lebih tepat waktu.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="bi bi-wallet2"></i></div>
+          <h3 class="feature-title">Pengelolaan Anggaran</h3>
+          <p class="feature-desc">Kelola anggaran perusahaan dengan mudah. Sistem kami membantu Anda memonitor dan
+            menyesuaikan anggaran untuk mencapai tujuan finansial yang diinginkan.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="bi bi-shield-lock-fill"></i></div>
+          <h3 class="feature-title">Keamanan Data</h3>
+          <p class="feature-desc">Menggunakan teknologi enkripsi dan perlindungan data tingkat lanjut untuk memastikan
+            informasi keuangan Anda tetap aman dari akses tidak sah.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="bi bi-bar-chart-fill"></i></div>
+          <h3 class="feature-title">Analisis Visual</h3>
+          <p class="feature-desc">Visualisasikan data keuangan Anda dalam grafik dan diagram yang mudah dipahami,
+            sehingga tren dan pola terlihat jelas.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="bi bi-phone-fill"></i></div>
+          <h3 class="feature-title">Akses Multi-perangkat</h3>
+          <p class="feature-desc">Akses informasi keuangan kapan saja dan di mana saja melalui smartphone, tablet,
+            maupun komputer dengan sinkronisasi data otomatis.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="bi bi-bell-fill"></i></div>
+          <h3 class="feature-title">Notifikasi Cerdas</h3>
+          <p class="feature-desc">Terima peringatan otomatis untuk transaksi penting, batas anggaran, dan pengingat
+            pembayaran agar Anda tidak pernah melewatkan hal penting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- KEUNTUNGAN -->
+  <section class="benefits-section">
+    <div class="section-wrap">
+      <div class="section-label">Keuntungan</div>
+      <h2 class="section-title">Mengapa Memilih NALLET?</h2>
+      <p class="section-sub">Ribuan pengguna telah merasakan manfaatnya. Berikut keunggulan utama yang membuat NALLET
+        berbeda dari yang lain.</p>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon"><i class="bi bi-lightning-fill"></i></div>
+          <h3 class="benefit-title">Efisiensi Waktu</h3>
+          <p class="benefit-desc">Dengan otomatisasi proses keuangan, hemat waktu dan kurangi kesalahan manusia dalam
+            pencatatan. Lebih banyak waktu untuk hal yang penting.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon"><i class="bi bi-globe2"></i></div>
+          <h3 class="benefit-title">Akses Mudah & Cepat</h3>
+          <p class="benefit-desc">Akses laporan dan data keuangan kapan saja dan dari mana saja, cukup dengan perangkat
+            yang terhubung ke internet.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon"><i class="bi bi-headset"></i></div>
+          <h3 class="benefit-title">Dukungan Pelanggan 24/7</h3>
+          <p class="benefit-desc">Tim dukungan kami siap membantu kapan saja, memastikan Anda selalu mendapatkan bantuan
+            profesional saat dibutuhkan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- TESTIMONI -->
+  <section class="testimonials-section">
+    <div class="section-wrap">
+      <div class="section-label">Testimoni</div>
+      <h2 class="section-title">Apa Kata Pengguna Kami?</h2>
+      <p class="section-sub">Lebih dari 10.000 pengguna telah mempercayakan manajemen keuangan mereka kepada NALLET.</p>
+      <div class="testimonials-grid">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Layanan ini sangat membantu dalam pengelolaan keuangan kami! Semua data tersaji dengan
+            jelas dan mudah dianalisis."</p>
+          <div class="testi-author">
+            <div class="testi-avatar av-1">AG</div>
+            <div>
+              <div class="testi-name">Ariana Grande</div>
+              <div class="testi-role">CEO, Keuangan Corp</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Antarmuka yang mudah digunakan membuat segalanya lebih efisien. Tim saya bisa
+            beradaptasi dalam hitungan hari."</p>
+          <div class="testi-author">
+            <div class="testi-avatar av-2">RC</div>
+            <div>
+              <div class="testi-name">Ritsuki Chan</div>
+              <div class="testi-role">Finance Manager</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Saya sangat merekomendasikan layanan ini kepada siapa saja yang ingin mengelola
+            keuangan bisnis mereka dengan lebih baik!"</p>
+          <div class="testi-author">
+            <div class="testi-avatar av-3">AC</div>
+            <div>
+              <div class="testi-name">Abe Cekut</div>
+              <div class="testi-role">Business Owner</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Pengalaman yang luar biasa! Fitur laporan real-time sangat membantu kami mengambil
+            keputusan bisnis lebih cepat."</p>
+          <div class="testi-author">
+            <div class="testi-avatar av-4">KR</div>
+            <div>
+              <div class="testi-name">Kamari Rose</div>
+              <div class="testi-role">CFO, Startup Maju</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- KONTAK & LOKASI -->
+  <section class="contact-section">
+    <div class="section-wrap">
+      <div class="section-label">Lokasi & Kontak</div>
+      <h2 class="section-title">Temukan Kami</h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.7; margin-bottom:0.5rem;">
+            Kami hadir untuk membantu Anda. Jangan ragu untuk menghubungi tim kami kapan saja.
+          </p>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-geo-alt-fill"></i></div>
+            <div class="contact-text">
+              <strong>Alamat Kantor</strong>
+              <p>Jl. Sudirman No. 88, Jakarta Pusat, DKI Jakarta 10220</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-telephone-fill"></i></div>
+            <div class="contact-text">
+              <strong>Telepon</strong>
+              <p>+62 21 5555 1234</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-envelope-fill"></i></div>
+            <div class="contact-text">
+              <strong>Email</strong>
+              <p>support@nallet.id</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-clock-fill"></i></div>
+            <div class="contact-text">
+              <strong>Jam Operasional</strong>
+              <p>Senin - Jumat, 08.00 - 17.00 WIB</p>
+            </div>
+          </div>
+        </div>
+        <div class="map-wrap">
+          <iframe src="https://maps.google.com/maps?q=jakarta+pusat&t=&z=14&ie=UTF8&iwloc=&output=embed"
+            title="Lokasi Kantor NALLET" allowfullscreen loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <div class="section-label" style="justify-content:center; color:var(--accent);">
+        <span style="background:var(--accent); width:20px; height:2px; border-radius:2px; display:inline-block;"></span>
+        Mulai Sekarang
+      </div>
+      <h2 class="section-title">Siap Mengelola Keuangan<br>dengan Lebih Cerdas?</h2>
+      <p class="section-sub">Bergabunglah dengan lebih dari 10.000 pengguna yang telah mempercayakan keuangan mereka
+        kepada NALLET. Gratis untuk 30 hari pertama!</p>
+      <div class="cta-btns">
+        <a href="daftar.html" class="btn-primary-lg">Daftar Gratis Sekarang <i class="bi bi-arrow-right"></i></a>
+        <a href="kontak.html" class="btn-outline-lg"
+          style="color:rgba(255,255,255,0.7); border-color:rgba(255,255,255,0.2);">Hubungi Kami</a>
+      </div>
+    </div>
+  </section>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <span class="footer-brand">NA<span>LLET</span></span>
+          <p class="footer-brand-desc">Platform sistem informasi keuangan terpercaya yang membantu Anda mengelola
+            keuangan dengan lebih mudah, cepat, dan aman.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigasi</div>
+          <ul class="footer-links">
+            <li><a href="#">Beranda</a></li>
+            <li><a href="berita.html">Berita Terbaru</a></li>
+            <li><a href="kontak.html">Kontak Kami</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Produk</div>
+          <ul class="footer-links">
+            <li><a href="#">Laporan Keuangan</a></li>
+            <li><a href="#">Pengelolaan Anggaran</a></li>
+            <li><a href="#">Analisis Data</a></li>
+            <li><a href="#">Keamanan Data</a></li>
+            <li><a href="#">Notifikasi Cerdas</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 NALLET. Semua Hak Dilindungi.</p>
+        <p>Didesain oleh: <strong style="color:rgba(255,255,255,0.75);">Diana Tri Asih</strong></p>
+      </div>
+    </div>
+  </footer>
+  <script>
+    function toggleMenu() {
+      const m = document.getElementById('mobileMenu');
+      m.classList.toggle('open');
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const href = a.getAttribute('href');
+        if (href === '#') return;
+        e.preventDefault();
+        const el = document.querySelector(href);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Intersection Observer for fade-in
+    const cards = document.querySelectorAll('.feature-card, .benefit-card, .testi-card');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '0';
+          entry.target.style.transform = 'translateY(20px)';
+          setTimeout(() => {
+            entry.target.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }, i * 80);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    cards.forEach(c => obs.observe(c));
+  </script>
+</body>
+
+</html>

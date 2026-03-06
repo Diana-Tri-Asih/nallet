@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0A1628;
+            --blue: #1565C0;
+            --blue-mid: #1976D2;
+            --blue-light: #42A5F5;
+            --accent: #00E5FF;
+            --surface: #F5F8FF;
+            --white: #FFFFFF;
+            --text-muted: #5A6A85;
+            --border: #E2EAF4;
+            --sidebar-w: 230px;
+            --navbar-h: 68px;
+            --shadow: 0 2px 16px rgba(21, 101, 192, 0.07);
+            --shadow-lg: 0 8px 40px rgba(10, 22, 40, 0.11);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--surface);
+            color: var(--navy);
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 300;
+            background: rgba(10, 22, 40, 0.97);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            height: var(--navbar-h);
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+
+        .nav-inner {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-brand {
+            font-family: 'Fraunces', serif;
+            font-size: 1.7rem;
+            font-weight: 900;
+            color: white;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-brand span {
+            color: var(--accent);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-bell {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.4rem 0.5rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .nav-bell:hover {
+            color: var(--accent);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .nav-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.3rem 0.75rem 0.3rem 0.4rem;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-profile:hover {
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .nav-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--navy);
+            border: 2px solid rgba(0, 229, 255, 0.35);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .nav-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .nav-profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-profile-name {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .nav-profile-email {
+            font-size: 0.68rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.1rem;
+            list-style: none;
+        }
+
+        .nav-links a,
+        .nav-links {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links {
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            top: var(--navbar-h);
+            left: 0;
+            bottom: 0;
+            width: var(--sidebar-w);
+            background: white;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            z-index: 200;
+            overflow-y: auto;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-profile {
+            padding: 1.25rem 1.25rem 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sidebar-ava {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--navy);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .sidebar-ava img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sidebar-uname {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .sidebar-uemail {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0.75rem;
+            flex: 1;
+        }
+
+        .sidebar-section {
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(90, 106, 133, 0.6);
+            padding: 0 0.6rem;
+            margin: 1rem 0 0.4rem;
+        }
+
+        .sidebar-section:first-child {
+            margin-top: 0;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.58rem 0.75rem;
+            border-radius: 10px;
+            font-size: 0.855rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.18s;
+            margin-bottom: 0.1rem;
+        }
+
+        .sidebar-link i {
+            font-size: 0.9rem;
+            width: 16px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .sidebar-link:hover {
+            background: var(--surface);
+            color: var(--navy);
+        }
+
+        .sidebar-link.active {
+            background: rgba(21, 101, 192, 0.09);
+            color: var(--blue);
+            font-weight: 700;
+        }
+
+        .sidebar-link.active i {
+            color: var(--blue);
+        }
+
+        .sidebar-link.danger {
+            color: #DC2626;
+        }
+
+        .sidebar-link.danger:hover {
+            background: #FEF2F2;
+            color: #B91C1C;
+        }
+
+        .sidebar-foot {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.68rem;
+            color: var(--border);
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: var(--sidebar-w);
+            padding-top: var(--navbar-h);
+            min-height: 100vh;
+        }
+
+        .main-body {
+            padding: 2rem 2rem 4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .page-header-title h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 0.2rem;
+        }
+
+        .page-header-title p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .page-header-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
+
+        .date-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1.5px solid var(--border);
+            color: var(--navy);
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+            border: none;
+            color: white;
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 0.5rem 1.1rem;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(21, 101, 192, 0.3);
+        }
+
+        /* STAT CARDS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.35rem 1.4rem;
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.25s, transform 0.25s;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 0 0 18px 18px;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .stat-card:hover::after {
+            opacity: 1;
+        }
+
+        .stat-card.c1::after {
+            background: linear-gradient(90deg, var(--blue), var(--blue-light));
+        }
+
+        .stat-card.c2::after {
+            background: linear-gradient(90deg, #16A34A, #4ADE80);
+        }
+
+        .stat-card.c3::after {
+            background: linear-gradient(90deg, #DC2626, #F87171);
+        }
+
+        .stat-card.c4::after {
+            background: linear-gradient(90deg, var(--accent), var(--blue-light));
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+        }
+
+        .stat-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .stat-icon.blue {
+            background: rgba(21, 101, 192, 0.1);
+            color: var(--blue);
+        }
+
+        .stat-icon.green {
+            background: rgba(22, 163, 74, 0.1);
+            color: #16A34A;
+        }
+
+        .stat-icon.red {
+            background: rgba(220, 38, 38, 0.1);
+            color: #DC2626;
+        }
+
+        .stat-icon.cyan {
+            background: rgba(0, 229, 255, 0.12);
+            color: #0097A7;
+        }
+
+        .stat-value {
+            font-family: 'Fraunces', serif;
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.3rem;
+            line-height: 1.1;
+        }
+
+        .stat-change {
+            font-size: 0.73rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stat-change.up {
+            color: #16A34A;
+        }
+
+        .stat-change.down {
+            color: #DC2626;
+        }
+
+        .stat-change.neutral {
+            color: var(--text-muted);
+        }
+
+        /* CARD */
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.5rem;
+            transition: box-shadow 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .chip {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            color: var(--text-muted);
+            font-family: inherit;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.28rem 0.75rem;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+
+        .chip:hover {
+            border-color: rgba(21, 101, 192, 0.3);
+            color: var(--blue);
+            background: rgba(21, 101, 192, 0.05);
+        }
+
+        .chip.active {
+            background: rgba(21, 101, 192, 0.08);
+            border-color: rgba(21, 101, 192, 0.25);
+            color: var(--blue);
+        }
+
+        .see-all {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--blue);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .see-all:hover {
+            text-decoration: underline;
+        }
+
+        /* CHARTS ROW */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 310px;
+            gap: 1.25rem;
+        }
+
+        /* BAR CHART */
+        .bar-chart-outer {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.85rem;
+            height: 220px;
+            padding: 0 0.25rem;
+        }
+
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.45rem;
+            flex: 1;
+        }
+
+        .bar-pair {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 185px;
+            width: 100%;
+        }
+
+        .bar {
+            flex: 1;
+            border-radius: 6px 6px 0 0;
+            position: relative;
+            min-width: 9px;
+            cursor: pointer;
+            transition: opacity 0.2s, filter 0.2s;
+        }
+
+        .bar:hover {
+            filter: brightness(1.1);
+        }
+
+        .bar.income {
+            background: linear-gradient(180deg, var(--blue-light), var(--blue));
+        }
+
+        .bar.expense {
+            background: linear-gradient(180deg, #93C5FD, #BFDBFE);
+        }
+
+        .bar-tip {
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.58rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .bar-month {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .legend {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* DONUT */
+        .donut-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .donut {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: conic-gradient(var(--blue) 0% 40%, #FB923C 40% 68%, #34D399 68% 100%);
+            position: relative;
+            margin: 0.75rem auto 1rem;
+            flex-shrink: 0;
+        }
+
+        .donut-hole {
+            width: 112px;
+            height: 112px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .donut-val {
+            font-family: 'Fraunces', serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.2;
+        }
+
+        .donut-sub {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        .budget-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .budget-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .budget-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .budget-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--navy);
+            flex: 1;
+            min-width: 60px;
+        }
+
+        .budget-track {
+            flex: 2;
+            height: 5px;
+            background: var(--surface);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .budget-bar {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .budget-amt {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            min-width: 56px;
+            text-align: right;
+        }
+
+        /* TABLE */
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead tr {
+            border-bottom: 1.5px solid var(--border);
+        }
+
+        thead th {
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            padding: 0 0.75rem 0.7rem;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--surface);
+            transition: background 0.15s;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: var(--surface);
+        }
+
+        tbody td {
+            padding: 0.85rem 0.75rem;
+            font-size: 0.84rem;
+            color: var(--navy);
+            vertical-align: middle;
+        }
+
+        .tx-with-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+        }
+
+        .tx-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .tx-name {
+            font-weight: 600;
+            font-size: 0.845rem;
+        }
+
+        .tx-cat {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+        }
+
+        .tx-amount {
+            font-family: 'Fraunces', serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+        }
+
+        .tx-amount.out {
+            color: #DC2626;
+        }
+
+        .tx-amount.in {
+            color: #16A34A;
+        }
+
+        .badge-pill {
+            font-size: 0.67rem;
+            font-weight: 700;
+            padding: 0.22rem 0.65rem;
+            border-radius: 100px;
+            display: inline-block;
+        }
+
+        .badge-pill.sub {
+            background: rgba(21, 101, 192, 0.08);
+            color: var(--blue);
+        }
+
+        .badge-pill.shop {
+            background: rgba(251, 146, 60, 0.12);
+            color: #EA580C;
+        }
+
+        .badge-pill.food {
+            background: rgba(52, 211, 153, 0.12);
+            color: #059669;
+        }
+
+        .method {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-family: 'Courier New', monospace;
+        }
+
+        .date-cell {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--navy);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 3rem 2rem 2rem;
+            margin-left: var(--sidebar-w);
+        }
+
+        .footer-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 3rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: white;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-brand span {
+            color: var(--accent);
+        }
+
+        .footer-brand-desc {
+            font-size: 0.84rem;
+            line-height: 1.65;
+            max-width: 280px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 1.25rem;
+        }
+
+        .social-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .social-btn:hover {
+            background: rgba(0, 229, 255, 0.12);
+            border-color: rgba(0, 229, 255, 0.3);
+            color: var(--accent);
+        }
+
+        .footer-col-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-links a {
+            font-size: 0.84rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        /* MOBILE OVERLAY */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 22, 40, 0.5);
+            z-index: 199;
+            backdrop-filter: blur(2px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 22, 40, 0.98);
+            z-index: 2000;
+            padding: 2rem;
+            flex-direction: column;
+            gap: 1rem;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.open {
+            display: flex;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1100px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 900px) {
+            :root {
+                --sidebar-w: 0px;
+            }
+
+            .sidebar {
+                transform: translateX(-230px);
+                width: 230px;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.open {
+                display: block;
+            }
+
+            footer {
+                margin-left: 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .main-body {
+                padding: 1.25rem 1rem 3rem;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .page-header-actions {
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <a class="nav-brand">NA<span>LLET</span></a>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="beranda2.html">Beranda</a></li>
+                <li><a href="berita2.html">Berita Terbaru</a></li>
+                <li><a href="kontak2.html">Kontak Kami</a></li>
+            </ul>
+            </li>
+            </ul>
+
+            <div class="nav-right">
+                <button class="nav-bell">
+                    <i class="bi bi-bell-fill"></i>
+                </button>
+                <a href="#" class="nav-profile">
+                    <div class="nav-avatar">
+                        <img src="saya.jpg" alt="Diana"
+                            onerror="this.style.display='none';this.parentElement.textContent='DT'">
+                    </div>
+                    <div class="nav-profile-info">
+                        <span class="nav-profile-name">Diana Tri Asih</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" onclick="document.getElementById('mobileMenu').classList.remove('open')"><i
+                class="bi bi-x"></i></button>
+        <a href="beranda2.html"
+            style="font-family:'Fraunces',serif;font-size:1.5rem;border-bottom:none;margin-bottom:0.5rem;">NALLET</a>
+        <a href="beranda2.html">Beranda</a>
+        <a href="berita2.html">Berita Terbaru</a>
+        <a href="kontak2.html">Kontak Kami</a>
+    </div>
+
+    <!-- SIDEBAR OVERLAY -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <nav class="sidebar-nav">
+            <div class="sidebar-section">Menu Utama</div>
+            <a href="dashboard.html" class="sidebar-link active">
+                <i class="bi bi-grid-fill"></i> Dashboard
+            </a>
+            <a href="transaksi.html" class="sidebar-link">
+                <i class="bi bi-arrow-left-right"></i> Transaksi
+            </a>
+            <a href="dompet.html" class="sidebar-link">
+                <i class="bi bi-wallet2"></i> Dompet
+            </a>
+            <a href="tujuan.html" class="sidebar-link">
+                <i class="bi bi-bullseye"></i> Tujuan
+            </a>
+            <a href="anggaran.html" class="sidebar-link">
+                <i class="bi bi-bar-chart-fill"></i> Anggaran
+            </a>
+
+            <div class="sidebar-section">Lainnya</div>
+            <a href="beranda.html" class="sidebar-link danger">
+                <i class="bi bi-box-arrow-right"></i> Keluar
+            </a>
+        </nav>
+
+        <div class="sidebar-foot">NALLET v1.0 · © 2026</div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+        <div class="main-body">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="page-header-title">
+                    <h2>Selamat datang, Diana!</h2>
+                    <p>Ini adalah waktu terbaik untuk mengelola keuanganmu.</p>
+                </div>
+                <div class="page-header-actions">
+                    <div class="date-label">
+                        <i class="bi bi-calendar3"></i>
+                        <span id="currentDate"></span>
+                    </div>
+                    <div class="btn-row">
+                        <button class="btn-outline"><i class="bi bi-sliders"></i> Kelola widget</button>
+                        <button class="btn-primary"><i class="bi bi-plus-lg"></i> Tambah widget baru</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAT CARDS -->
+            <div class="stats-grid">
+                <div class="stat-card c1">
+                    <div class="stat-top">
+                        <div class="stat-label">Saldo Awal</div>
+                        <div class="stat-icon blue"><i class="bi bi-bank2"></i></div>
+                    </div>
+                    <div class="stat-value">Rp95 Jt</div>
+                    <div class="stat-change neutral"><i class="bi bi-dash"></i> Saldo bulan ini</div>
+                </div>
+                <div class="stat-card c2">
+                    <div class="stat-top">
+                        <div class="stat-label">Pemasukan</div>
+                        <div class="stat-icon green"><i class="bi bi-arrow-down-circle-fill"></i></div>
+                    </div>
+                    <div class="stat-value">Rp7 Jt</div>
+                    <div class="stat-change up"><i class="bi bi-arrow-up-short"></i> +6,3% bulan lalu</div>
+                </div>
+                <div class="stat-card c3">
+                    <div class="stat-top">
+                        <div class="stat-label">Pengeluaran</div>
+                        <div class="stat-icon red"><i class="bi bi-arrow-up-circle-fill"></i></div>
+                    </div>
+                    <div class="stat-value">Rp3 Jt</div>
+                    <div class="stat-change down"><i class="bi bi-arrow-down-short"></i> -2,4% bulan lalu</div>
+                </div>
+                <div class="stat-card c4">
+                    <div class="stat-top">
+                        <div class="stat-label">Total Saldo</div>
+                        <div class="stat-icon cyan"><i class="bi bi-wallet2"></i></div>
+                    </div>
+                    <div class="stat-value">Rp100 Jt</div>
+                    <div class="stat-change up"><i class="bi bi-arrow-up-short"></i> +12,1% bulan lalu</div>
+                </div>
+            </div>
+
+            <!-- CHARTS ROW -->
+            <div class="charts-row">
+
+                <!-- Bar Chart -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title">Aliran Uang</div>
+                        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+                            <div class="legend">
+                                <div class="legend-item">
+                                    <div class="legend-dot" style="background:var(--blue);"></div> Pemasukan
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-dot" style="background:#BFDBFE;"></div> Pengeluaran
+                                </div>
+                            </div>
+                            <button class="chip active">Semua akun</button>
+                            <button class="chip">Tahun ini</button>
+                        </div>
+                    </div>
+                    <div class="bar-chart-outer">
+                        <!-- Jan -->
+                        <div class="bar-group">
+                            <div class="bar-pair">
+                                <div class="bar income" style="height:40%"><span class="bar-tip">6Jt</span></div>
+                                <div class="bar expense" style="height:35%"><span class="bar-tip">5,5Jt</span></div>
+                            </div>
+                            <div class="bar-month">Jan</div>
+                        </div>
+                        <!-- Feb -->
+                        <div class="bar-group">
+                            <div class="bar-pair">
+                                <div class="bar income" style="height:60%"><span class="bar-tip">9Jt</span></div>
+                                <div class="bar expense" style="height:50%"><span class="bar-tip">7,5Jt</span></div>
+                            </div>
+                            <div class="bar-month">Feb</div>
+                        </div>
+                        <!-- Mar (bulan ini) -->
+                        <div class="bar-group">
+                            <div class="bar-pair">
+                                <div class="bar income" style="height:70%;box-shadow:0 0 0 2px rgba(21,101,192,0.25);">
+                                    <span class="bar-tip">12Jt</span></div>
+                                <div class="bar expense" style="height:55%;box-shadow:0 0 0 2px rgba(191,219,254,0.5);">
+                                    <span class="bar-tip">10,5Jt</span></div>
+                            </div>
+                            <div class="bar-month" style="color:var(--blue);font-weight:700;">Mar</div>
+                        </div>
+                        <!-- Apr–Des belum ada data -->
+                        <div class="bar-group">
+                            <div class="bar-pair">
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                            </div>
+                            <div class="bar-month" style="color:#B8C4D4;">Apr</div>
+                        </div>
+                        <div class="bar-group">
+                            <div class="bar-pair">
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                            </div>
+                            <div class="bar-month" style="color:#B8C4D4;">Mei</div>
+                        </div>
+                        <div class="bar-group">
+                            <div class="bar-pair">
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                            </div>
+                            <div class="bar-month" style="color:#B8C4D4;">Jun</div>
+                        </div>
+                        <div class="bar-group">
+                            <div class="bar-pair">
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                            </div>
+                            <div class="bar-month" style="color:#B8C4D4;">Jul</div>
+                        </div>
+                        <div class="bar-group">
+                            <div class="bar-pair">
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                            </div>
+                            <div class="bar-month" style="color:#B8C4D4;">Agu</div>
+                        </div>
+                        <div class="bar-group">
+                            <div class="bar-pair">
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                            </div>
+                            <div class="bar-month" style="color:#B8C4D4;">Sep</div>
+                        </div>
+                        <div class="bar-group">
+                            <div class="bar-pair">
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                            </div>
+                            <div class="bar-month" style="color:#B8C4D4;">Okt</div>
+                        </div>
+                        <div class="bar-group">
+                            <div class="bar-pair">
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                            </div>
+                            <div class="bar-month" style="color:#B8C4D4;">Nov</div>
+                        </div>
+                        <div class="bar-group">
+                            <div class="bar-pair">
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                                <div class="bar"
+                                    style="height:1%;background:linear-gradient(180deg,#D1D9E6,#E2EAF4);cursor:default;">
+                                </div>
+                            </div>
+                            <div class="bar-month" style="color:#B8C4D4;">Des</div>
+                        </div>
+                    </div>
+
+                    <!-- Legend -->
+                    <div style="display:flex;gap:1.25rem;margin-top:1rem;flex-wrap:wrap;">
+                        <div
+                            style="display:flex;align-items:center;gap:0.4rem;font-size:0.73rem;font-weight:600;color:var(--text-muted);">
+                            <div style="width:9px;height:9px;border-radius:50%;background:var(--blue);"></div> Pemasukan
+                            aktual
+                        </div>
+                        <div
+                            style="display:flex;align-items:center;gap:0.4rem;font-size:0.73rem;font-weight:600;color:var(--text-muted);">
+                            <div style="width:9px;height:9px;border-radius:50%;background:#BFDBFE;"></div> Pengeluaran
+                            aktual
+                        </div>
+                        <div
+                            style="display:flex;align-items:center;gap:0.4rem;font-size:0.73rem;font-weight:600;color:var(--text-muted);">
+                            <div style="width:9px;height:9px;border-radius:50%;background:#D1D9E6;"></div> Belum
+                            tersedia
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Donut Chart Anggaran -->
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-title">Anggaran</div>
+                        <a href="anggaran.html" class="see-all">Detail <i class="bi bi-arrow-right"></i></a>
+                    </div>
+
+                    <div class="donut-wrap">
+                        <div class="donut">
+                            <div class="donut-hole">
+                                <div class="donut-val">Rp5,95 Jt</div>
+                                <div class="donut-sub">Total Anggaran</div>
+                            </div>
+                        </div>
+
+                        <div class="budget-list">
+                            <div class="budget-item">
+                                <div class="budget-dot" style="background:var(--blue);"></div>
+                                <div class="budget-name">Makanan</div>
+                                <div class="budget-track">
+                                    <div class="budget-bar" style="width:40%;background:var(--blue);"></div>
+                                </div>
+                                <div class="budget-amt">Rp2,4 Jt</div>
+                            </div>
+                            <div class="budget-item">
+                                <div class="budget-dot" style="background:#FB923C;"></div>
+                                <div class="budget-name">Belanja</div>
+                                <div class="budget-track">
+                                    <div class="budget-bar" style="width:28%;background:#FB923C;"></div>
+                                </div>
+                                <div class="budget-amt">Rp1,7 Jt</div>
+                            </div>
+                            <div class="budget-item">
+                                <div class="budget-dot" style="background:#34D399;"></div>
+                                <div class="budget-name">Kesehatan</div>
+                                <div class="budget-track">
+                                    <div class="budget-bar" style="width:32%;background:#34D399;"></div>
+                                </div>
+                                <div class="budget-amt">Rp1,85 Jt</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRANSAKSI TERBARU -->
+            <div class="card">
+                <div class="card-head">
+                    <div class="card-title">Transaksi Terbaru</div>
+                    <div style="display:flex;align-items:center;gap:0.6rem;">
+                        <button class="chip active">Semua akun</button>
+                        <a href="transaksi.html" class="see-all">Lihat semua <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Pembayaran</th>
+                                <th>Tanggal</th>
+                                <th>Jumlah</th>
+                                <th>Metode</th>
+                                <th>Kategori</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="tx-with-icon">
+                                        <div class="tx-icon" style="background:rgba(21,101,192,0.1);color:var(--blue);">
+                                            <i class="bi bi-play-circle-fill"></i>
+                                        </div>
+                                        <div>
+                                            <div class="tx-name">YouTube Premium</div>
+                                            <div class="tx-cat">Berlangganan bulanan</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="date-cell">05 Mar · 20:30</div>
+                                </td>
+                                <td>
+                                    <div class="tx-amount out">-Rp10.000</div>
+                                </td>
+                                <td>
+                                    <div class="method">BNI ••3254</div>
+                                </td>
+                                <td><span class="badge-pill sub">Berlangganan</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="tx-with-icon">
+                                        <div class="tx-icon" style="background:rgba(251,146,60,0.12);color:#EA580C;">
+                                            <i class="bi bi-bag"></i>
+                                        </div>
+                                        <div>
+                                            <div class="tx-name">Reserved</div>
+                                            <div class="tx-cat">Pembelian online</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="date-cell">05 Mar · 15:00</div>
+                                </td>
+                                <td>
+                                    <div class="tx-amount out">-Rp150.000</div>
+                                </td>
+                                <td>
+                                    <div class="method">BCA ••2154</div>
+                                </td>
+                                <td><span class="badge-pill shop">Belanja</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="tx-with-icon">
+                                        <div class="tx-icon" style="background:rgba(52,211,153,0.12);color:#059669;">
+                                            <i class="bi bi-egg-fried"></i>
+                                        </div>
+                                        <div>
+                                            <div class="tx-name">Yaposhka</div>
+                                            <div class="tx-cat">Restoran</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="date-cell">05 Mar · 10:00</div>
+                                </td>
+                                <td>
+                                    <div class="tx-amount out">-Rp80.000</div>
+                                </td>
+                                <td>
+                                    <div class="method">BCA ••2154</div>
+                                </td>
+                                <td><span class="badge-pill food">Makanan</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div><!-- /main-body -->
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div>
+                    <span class="footer-brand">NA<span>LLET</span></span>
+                    <p class="footer-brand-desc">Platform sistem informasi keuangan terpercaya yang membantu Anda
+                        mengelola
+                        keuangan dengan lebih mudah, cepat, dan aman.</p>
+                    <div class="footer-socials">
+                        <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-btn"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="social-btn"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <div class="footer-col-title">Navigasi</div>
+                    <ul class="footer-links">
+                        <li><a href="beranda2.html">Beranda</a></li>
+                        <li><a href="berita2.html">Berita Terbaru</a></li>
+                        <li><a href="kontak2.html">Kontak Kami</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Produk</div>
+                    <ul class="footer-links">
+                        <li><a href="#">Laporan Keuangan</a></li>
+                        <li><a href="#">Pengelolaan Anggaran</a></li>
+                        <li><a href="#">Analisis Data</a></li>
+                        <li><a href="#">Keamanan Data</a></li>
+                        <li><a href="#">Notifikasi Cerdas</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 NALLET. Semua Hak Dilindungi.</p>
+                <p>Didesain oleh: <strong style="color:rgba(255,255,255,0.75);">Diana Tri Asih</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('id-ID', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+
+        // Sidebar toggle
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('open');
+        }
+
+        // Chip toggle
+        document.querySelectorAll('.chip').forEach(c => {
+            c.addEventListener('click', function () {
+                const siblings = this.closest('.card-head, div').querySelectorAll('.chip');
+                siblings.forEach(s => { if (s !== this) s.classList.remove('active'); });
+                this.classList.toggle('active');
+            });
+        });
+
+        // Fade-in animation on scroll
+        const cards = document.querySelectorAll('.stat-card, .card');
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, i * 55);
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.06 });
+        cards.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(12px)';
+            io.observe(el);
+        });
+    </script>
+</body>
+
+</html>

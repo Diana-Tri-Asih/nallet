@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Berita Terbaru</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0A1628;
+      --blue: #1565C0;
+      --blue-mid: #1976D2;
+      --blue-light: #42A5F5;
+      --accent: #00E5FF;
+      --accent2: #FFD600;
+      --surface: #F5F8FF;
+      --white: #FFFFFF;
+      --text-muted: #5A6A85;
+      --border: #E2EAF4;
+      --card-bg: #FFFFFF;
+      --shadow: 0 4px 32px rgba(21, 101, 192, 0.10);
+      --shadow-lg: 0 16px 64px rgba(10, 22, 40, 0.14);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--surface);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(10, 22, 40, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 0 2rem;
+      height: 68px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-inner {
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      font-family: 'Fraunces', serif;
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-brand span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: var(--white);
+      padding: 0.45rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      border: none;
+      color: var(--navy);
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-accent:hover {
+      background: #33EAFF;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0, 229, 255, 0.35);
+    }
+
+    .btn-bell {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.1rem;
+      transition: color 0.2s;
+      padding: 0.3rem;
+    }
+
+    .btn-bell:hover {
+      color: var(--accent);
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-size: 1.4rem;
+    }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #102040 60%, #0D3060 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 75% 40%, rgba(0, 229, 255, 0.07) 0%, transparent 50%),
+        radial-gradient(circle at 25% 70%, rgba(21, 101, 192, 0.12) 0%, transparent 50%);
+    }
+
+    .page-hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    .page-hero-inner {
+      position: relative;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .page-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.25rem;
+    }
+
+    .page-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      color: white;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .page-sub {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.7;
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb-wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .breadcrumb-wrap a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .breadcrumb-wrap a:hover {
+      color: var(--blue-light);
+    }
+
+    .breadcrumb-wrap i {
+      font-size: 0.65rem;
+      color: var(--border);
+    }
+
+    /* MAIN LAYOUT */
+    .main-wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    /* BERITA LIST */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .news-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.75rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .news-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--blue), var(--accent));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .news-card:hover {
+      border-color: rgba(21, 101, 192, 0.2);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+
+    .news-card:hover::before {
+      opacity: 1;
+    }
+
+    .news-img-wrap {
+      flex-shrink: 0;
+      width: 110px;
+      height: 110px;
+      border-radius: 14px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #DBEAFE, #EFF6FF);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--blue-light);
+      border: 1px solid var(--border);
+    }
+
+    .news-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .news-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .news-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .news-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: rgba(21, 101, 192, 0.08);
+      border: 1px solid rgba(21, 101, 192, 0.15);
+      padding: 0.2rem 0.65rem;
+      border-radius: 100px;
+    }
+
+    .news-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .news-date i {
+      font-size: 0.72rem;
+    }
+
+    .news-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.4;
+      margin-bottom: 0.6rem;
+      transition: color 0.2s;
+    }
+
+    .news-card:hover .news-title {
+      color: var(--blue);
+    }
+
+    .news-excerpt {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .news-read {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--blue);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+
+    .news-read:hover {
+      gap: 0.65rem;
+      color: var(--blue-mid);
+    }
+
+    .news-read-time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* Featured card */
+    .news-card.featured {
+      flex-direction: column;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .news-card.featured .news-img-wrap {
+      width: 100%;
+      height: 220px;
+      border-radius: 0;
+      border: none;
+      font-size: 3rem;
+    }
+
+    .news-card.featured .news-body {
+      padding: 1.75rem;
+    }
+
+    .news-card.featured .news-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+    }
+
+    .news-card.featured .news-excerpt {
+      line-clamp: 4;
+    }
+
+    .featured-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: white;
+      background: var(--blue);
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: sticky;
+      top: 88px;
+    }
+
+    .sidebar-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.5rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar-title::before {
+      content: '';
+      width: 14px;
+      height: 2px;
+      background: var(--blue);
+      border-radius: 2px;
+    }
+
+    /* Search */
+    .search-box {
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.65rem 1rem 0.65rem 2.5rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      color: var(--navy);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--blue);
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Kategori */
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .category-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.55rem 0.8rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .category-item:hover,
+    .category-item.active {
+      background: rgba(21, 101, 192, 0.07);
+    }
+
+    .category-item-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .category-item-left i {
+      color: var(--blue);
+      font-size: 0.9rem;
+    }
+
+    .category-count {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--blue);
+      background: rgba(21, 101, 192, 0.1);
+      padding: 0.15rem 0.55rem;
+      border-radius: 100px;
+    }
+
+    /* Populer */
+    .popular-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .popular-item {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      cursor: pointer;
+      transition: all 0.2s;
+      padding: 0.3rem;
+      border-radius: 10px;
+    }
+
+    .popular-item:hover {
+      background: var(--surface);
+    }
+
+    .popular-num {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--border);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 20px;
+    }
+
+    .popular-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.45;
+    }
+
+    .popular-date {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* Tags */
+    .tags-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .tag:hover {
+      background: rgba(21, 101, 192, 0.07);
+      border-color: rgba(21, 101, 192, 0.2);
+      color: var(--blue);
+    }
+
+    /* Newsletter */
+    .newsletter-card {
+      background: linear-gradient(135deg, var(--navy), #0D3060);
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .newsletter-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(0, 229, 255, 0.12) 0%, transparent 60%);
+    }
+
+    .newsletter-card .sidebar-title {
+      color: white;
+      position: relative;
+    }
+
+    .newsletter-card .sidebar-title::before {
+      background: var(--accent);
+    }
+
+    .newsletter-desc {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .newsletter-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 0.65rem 1rem;
+      font-family: inherit;
+      font-size: 0.82rem;
+      color: white;
+      outline: none;
+      margin-bottom: 0.75rem;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+
+    .newsletter-input::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .newsletter-input:focus {
+      border-color: var(--accent);
+    }
+
+    .btn-subscribe {
+      width: 100%;
+      background: var(--accent);
+      border: none;
+      border-radius: 10px;
+      color: var(--navy);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .btn-subscribe:hover {
+      background: #33EAFF;
+      box-shadow: 0 4px 16px rgba(0, 229, 255, 0.35);
+    }
+
+    /* PAGINATION */
+    .pagination-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      margin-top: 2.5rem;
+    }
+
+    .page-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .page-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .page-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--navy);
+      color: rgba(255, 255, 255, 0.6);
+      padding: 3rem 2rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: white;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-brand span {
+      color: var(--accent);
+    }
+
+    .footer-brand-desc {
+      font-size: 0.84rem;
+      line-height: 1.65;
+      max-width: 280px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
+    }
+
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .social-btn:hover {
+      background: rgba(0, 229, 255, 0.12);
+      border-color: rgba(0, 229, 255, 0.3);
+      color: var(--accent);
+    }
+
+    .footer-col-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.84rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 22, 40, 0.98);
+      z-index: 2000;
+      padding: 2rem;
+      flex-direction: column;
+      gap: 1rem;
+      overflow-y: auto;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .mobile-menu a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 600;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .mobile-cta {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 991px) {
+      .main-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .nav-links,
+      .nav-right {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .main-wrap {
+        padding: 0 1.5rem 3rem;
+      }
+
+      .news-card {
+        flex-direction: column;
+      }
+
+      .news-img-wrap {
+        width: 100%;
+        height: 160px;
+        border-radius: 12px;
+      }
+
+      .news-card.featured .news-img-wrap {
+        height: 180px;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="beranda.html" class="nav-brand">NA<span>LLET</span></a>
+      <ul class="nav-links">
+        <li><a href="beranda.html">Beranda</a></li>
+        <li><a href="berita.html" class="active">Berita Terbaru</a></li>
+        <li><a href="kontak.html">Kontak Kami</a></li>
+      </ul>
+      </li>
+      </ul>
+      <div class="nav-right">
+        <button class="btn-bell"><i class="bi bi-bell-fill"></i></button>
+        <a href="masuk.html" class="btn-ghost">Masuk</a>
+        <a href="daftar.html" class="btn-accent">Daftar Gratis</a>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()">
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+  </nav>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" onclick="toggleMenu()"><i class="bi bi-x"></i></button>
+    <a href="beranda.html"
+      style="font-family: 'Fraunces', serif; font-size: 1.5rem; border-bottom: none; margin-bottom: 0.5rem;">NALLET</a>
+    <a href="beranda.html">Beranda</a>
+    <a href="berita.html">Berita Terbaru</a>
+    <a href="kontak.html">Kontak Kami</a>
+    <div class="mobile-cta">
+      <a href="masuk.html" class="btn-ghost" style="flex:1; text-align:center;">Masuk</a>
+      <a href="daftar.html" class="btn-accent" style="flex:1; text-align:center;">Daftar</a>
+    </div>
+  </div>
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-inner">
+      <div class="page-badge"><i class="bi bi-newspaper" style="font-size:0.7rem;"></i> Informasi Terkini</div>
+      <h1 class="page-title">Berita & Artikel Terbaru</h1>
+      <p class="page-sub">Temukan informasi terkini seputar keuangan, teknologi finansial, dan tips pengelolaan anggaran
+        untuk bisnis Anda.</p>
+    </div>
+  </section>
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-wrap">
+    <!-- <a href="beranda.html"><i class="bi bi-house-fill"></i> Beranda</a>
+         <i class="bi bi-chevron-right"></i>
+         <span>Berita Terbaru</span> -->
+  </div>
+  <!-- MAIN CONTENT -->
+  <div class="main-wrap">
+    <!-- News List -->
+    <div>
+      <div class="news-list">
+        <!-- Featured Card -->
+        <article class="news-card featured">
+          <div class="news-img-wrap">
+            <img src="berita1.jpg" alt="Sistem Informasi Keuangan" onerror="this.style.display='none'">
+            <i class="bi bi-bar-chart-fill" style="display:none;" id="fb1"></i>
+          </div>
+          <div class="news-body">
+            <div class="news-meta">
+              <span class="featured-label"><i class="bi bi-star-fill" style="font-size:0.65rem;"></i> Unggulan</span>
+              <span class="news-tag">Manajemen Keuangan</span>
+              <span class="news-date"><i class="bi bi-calendar3"></i> 28 Feb 2025</span>
+            </div>
+            <h2 class="news-title">Pentingnya Sistem Informasi Keuangan dalam Manajemen Keuangan Modern</h2>
+            <p class="news-excerpt">Sistem informasi keuangan adalah alat yang sangat penting bagi organisasi untuk
+              mengelola dan menganalisis data keuangan. Dengan menggunakan sistem ini, organisasi dapat melakukan
+              pencatatan keuangan secara lebih cepat, tepat, dan akurat. Sistem ini juga memungkinkan pembuatan laporan
+              keuangan yang komprehensif dan mendukung pengambilan keputusan strategis.</p>
+            <div class="news-footer">
+              <a href="#" class="news-read">Baca Selengkapnya <i class="bi bi-arrow-right"></i></a>
+              <span class="news-read-time"><i class="bi bi-clock"></i> 5 menit baca</span>
+            </div>
+          </div>
+        </article>
+        <!-- Card 2 -->
+        <article class="news-card">
+          <div class="news-img-wrap">
+            <img src="berita2.jpg" alt="Sistem Web"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <i class="bi bi-globe2" style="display:none;"></i>
+          </div>
+          <div class="news-body">
+            <div class="news-meta">
+              <span class="news-tag">Teknologi</span>
+              <span class="news-date"><i class="bi bi-calendar3"></i> 22 Feb 2025</span>
+            </div>
+            <h3 class="news-title">Implementasi Sistem Informasi Keuangan Berbasis Web untuk Bisnis Modern</h3>
+            <p class="news-excerpt">Dengan kemajuan teknologi, banyak organisasi beralih ke sistem informasi keuangan
+              berbasis web. Sistem ini menawarkan kemudahan akses dan kolaborasi yang lebih baik antar pengguna.
+              Penggunaan database seperti MySQL dan bahasa pemrograman PHP memungkinkan pengembangan aplikasi yang dapat
+              diakses dari mana saja.</p>
+            <div class="news-footer">
+              <a href="#" class="news-read">Baca Selengkapnya <i class="bi bi-arrow-right"></i></a>
+              <span class="news-read-time"><i class="bi bi-clock"></i> 4 menit baca</span>
+            </div>
+          </div>
+        </article>
+        <!-- Card 3 -->
+        <article class="news-card">
+          <div class="news-img-wrap">
+            <img src="berita3.jpg" alt="Keuntungan Sistem"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <i class="bi bi-graph-up-arrow" style="display:none;"></i>
+          </div>
+          <div class="news-body">
+            <div class="news-meta">
+              <span class="news-tag">Analisis</span>
+              <span class="news-date"><i class="bi bi-calendar3"></i> 15 Feb 2025</span>
+            </div>
+            <h3 class="news-title">Keuntungan Menggunakan Sistem Informasi Keuangan untuk Pengambilan Keputusan</h3>
+            <p class="news-excerpt">Sistem informasi keuangan tidak hanya membantu dalam pencatatan dan pelaporan,
+              tetapi juga memberikan analisis yang mendalam tentang kondisi keuangan organisasi. Dengan fitur-fitur
+              seperti dashboard keuangan dan laporan analitik, manajer dapat membuat keputusan yang lebih baik dan
+              strategis.</p>
+            <div class="news-footer">
+              <a href="#" class="news-read">Baca Selengkapnya <i class="bi bi-arrow-right"></i></a>
+              <span class="news-read-time"><i class="bi bi-clock"></i> 3 menit baca</span>
+            </div>
+          </div>
+        </article>
+        <!-- Card 4 -->
+        <article class="news-card">
+          <div class="news-img-wrap">
+            <img src="berita3.jpg" alt="Keuntungan Sistem"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <i class="bi bi-shield-lock-fill"></i>
+          </div>
+          <div class="news-body">
+            <div class="news-meta">
+              <span class="news-tag">Keamanan</span>
+              <span class="news-date"><i class="bi bi-calendar3"></i> 10 Feb 2025</span>
+            </div>
+            <h3 class="news-title">Strategi Keamanan Data Keuangan di Era Digital yang Semakin Rentan</h3>
+            <p class="news-excerpt">Keamanan data keuangan menjadi prioritas utama bagi setiap organisasi. Dengan
+              meningkatnya ancaman siber, enkripsi data dan autentikasi dua faktor menjadi standar minimal yang wajib
+              diterapkan oleh setiap sistem informasi keuangan modern.</p>
+            <div class="news-footer">
+              <a href="#" class="news-read">Baca Selengkapnya <i class="bi bi-arrow-right"></i></a>
+              <span class="news-read-time"><i class="bi bi-clock"></i> 6 menit baca</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <!-- Pagination -->
+      <div class="pagination-wrap">
+        <a href="#" class="page-btn"><i class="bi bi-chevron-left"></i></a>
+        <a href="#" class="page-btn active">1</a>
+        <a href="#" class="page-btn">2</a>
+        <a href="#" class="page-btn">3</a>
+        <span style="color:var(--text-muted); font-size:0.85rem; padding: 0 0.25rem;">...</span>
+        <a href="#" class="page-btn">8</a>
+        <a href="#" class="page-btn"><i class="bi bi-chevron-right"></i></a>
+      </div>
+    </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- Search -->
+      <div class="sidebar-card">
+        <div class="sidebar-title">Cari Berita</div>
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Kata kunci...">
+        </div>
+      </div>
+      <!-- Kategori -->
+      <div class="sidebar-card">
+        <div class="sidebar-title">Kategori</div>
+        <div class="category-list">
+          <a href="#" class="category-item active">
+            <div class="category-item-left"><i class="bi bi-grid-fill"></i> Semua</div>
+            <span class="category-count">12</span>
+          </a>
+          <a href="#" class="category-item">
+            <div class="category-item-left"><i class="bi bi-wallet2"></i> Manajemen Keuangan</div>
+            <span class="category-count">4</span>
+          </a>
+          <a href="#" class="category-item">
+            <div class="category-item-left"><i class="bi bi-globe2"></i> Teknologi</div>
+            <span class="category-count">3</span>
+          </a>
+          <a href="#" class="category-item">
+            <div class="category-item-left"><i class="bi bi-graph-up"></i> Analisis</div>
+            <span class="category-count">3</span>
+          </a>
+          <a href="#" class="category-item">
+            <div class="category-item-left"><i class="bi bi-shield-lock"></i> Keamanan</div>
+            <span class="category-count">2</span>
+          </a>
+        </div>
+      </div>
+      <!-- Populer -->
+      <div class="sidebar-card">
+        <div class="sidebar-title">Paling Populer</div>
+        <div class="popular-list">
+          <div class="popular-item">
+            <div class="popular-num">01</div>
+            <div>
+              <div class="popular-title">Pentingnya Sistem Informasi Keuangan dalam Manajemen</div>
+              <div class="popular-date"><i class="bi bi-calendar3"></i> 28 Feb 2025</div>
+            </div>
+          </div>
+          <div class="popular-item">
+            <div class="popular-num">02</div>
+            <div>
+              <div class="popular-title">Implementasi Sistem Keuangan Berbasis Web</div>
+              <div class="popular-date"><i class="bi bi-calendar3"></i> 22 Feb 2025</div>
+            </div>
+          </div>
+          <div class="popular-item">
+            <div class="popular-num">03</div>
+            <div>
+              <div class="popular-title">Strategi Keamanan Data di Era Digital</div>
+              <div class="popular-date"><i class="bi bi-calendar3"></i> 10 Feb 2025</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Tags -->
+      <div class="sidebar-card">
+        <div class="sidebar-title">Topik</div>
+        <div class="tags-wrap">
+          <a href="#" class="tag">Keuangan</a>
+          <a href="#" class="tag">Teknologi</a>
+          <a href="#" class="tag">Anggaran</a>
+          <a href="#" class="tag">Laporan</a>
+          <a href="#" class="tag">Enkripsi</a>
+          <a href="#" class="tag">Dashboard</a>
+          <a href="#" class="tag">Analitik</a>
+          <a href="#" class="tag">Cloud</a>
+        </div>
+      </div>
+      <!-- Newsletter -->
+      <div class="sidebar-card newsletter-card">
+        <div class="sidebar-title">Newsletter</div>
+        <p class="newsletter-desc">Dapatkan berita dan update terbaru langsung di kotak masuk Anda.</p>
+        <input type="email" class="newsletter-input" placeholder="Alamat email Anda...">
+        <button class="btn-subscribe">Berlangganan Gratis</button>
+      </div>
+    </aside>
+  </div>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <span class="footer-brand">NA<span>LLET</span></span>
+          <p class="footer-brand-desc">Platform sistem informasi keuangan terpercaya yang membantu Anda mengelola
+            keuangan dengan lebih mudah, cepat, dan aman.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigasi</div>
+          <ul class="footer-links">
+            <li><a href="beranda.html">Beranda</a></li>
+            <li><a href="#">Berita Terbaru</a></li>
+            <li><a href="kontak.html">Kontak Kami</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Produk</div>
+          <ul class="footer-links">
+            <li><a href="#">Laporan Keuangan</a></li>
+            <li><a href="#">Pengelolaan Anggaran</a></li>
+            <li><a href="#">Analisis Data</a></li>
+            <li><a href="#">Keamanan Data</a></li>
+            <li><a href="#">Notifikasi Cerdas</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 NALLET. Semua Hak Dilindungi.</p>
+        <p>Didesain oleh: <strong style="color:rgba(255,255,255,0.75);">Diana Tri Asih</strong></p>
+      </div>
+    </div>
+  </footer>
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    // Fade-in on scroll
+    const cards = document.querySelectorAll('.news-card');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '0';
+          entry.target.style.transform = 'translateY(18px)';
+          setTimeout(() => {
+            entry.target.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }, i * 100);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    cards.forEach(c => obs.observe(c));
+
+    // Image fallback icon visibility
+    document.querySelectorAll('.news-img-wrap img').forEach(img => {
+      img.addEventListener('error', function () {
+        this.style.display = 'none';
+        const icon = this.nextElementSibling;
+        if (icon) icon.style.display = 'flex';
+      });
+    });
+  </script>
+</body>
+
+</html>

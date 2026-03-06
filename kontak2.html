@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kontak Kami</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --navbar-h: 68px;
+      --navy: #0A1628;
+      --blue: #1565C0;
+      --blue-mid: #1976D2;
+      --blue-light: #42A5F5;
+      --accent: #00E5FF;
+      --accent2: #FFD600;
+      --surface: #F5F8FF;
+      --white: #FFFFFF;
+      --text-muted: #5A6A85;
+      --border: #E2EAF4;
+      --card-bg: #FFFFFF;
+      --shadow: 0 4px 32px rgba(21, 101, 192, 0.10);
+      --shadow-lg: 0 16px 64px rgba(10, 22, 40, 0.14);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--surface);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 300;
+      background: rgba(10, 22, 40, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      height: var(--navbar-h);
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+    }
+
+    .nav-inner {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      font-family: 'Fraunces', serif;
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: white;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-brand span {
+      color: var(--accent);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-bell {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.4rem 0.5rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .nav-bell:hover {
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.3rem 0.75rem 0.3rem 0.4rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .nav-profile:hover {
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .nav-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--navy);
+      border: 2px solid rgba(0, 229, 255, 0.35);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .nav-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .nav-profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-profile-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.2;
+    }
+
+    .nav-profile-email {
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 0.3rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.1rem;
+      list-style: none;
+    }
+
+    .nav-links a.active {
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-links a,
+    .nav-links {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links {
+      color: white;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: var(--white);
+      padding: 0.45rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      border: none;
+      color: var(--navy);
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-accent:hover {
+      background: #33EAFF;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0, 229, 255, 0.35);
+    }
+
+    .btn-bell {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.1rem;
+      transition: color 0.2s;
+      padding: 0.3rem;
+    }
+
+    .btn-bell:hover {
+      color: var(--accent);
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-size: 1.4rem;
+    }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #102040 60%, #0D3060 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 75% 40%, rgba(0, 229, 255, 0.07) 0%, transparent 50%),
+        radial-gradient(circle at 25% 70%, rgba(21, 101, 192, 0.12) 0%, transparent 50%);
+    }
+
+    .page-hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    .page-hero-inner {
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .page-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.25rem;
+    }
+
+    .page-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      color: white;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .page-sub {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.7;
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb-wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .breadcrumb-wrap a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .breadcrumb-wrap a:hover {
+      color: var(--blue-light);
+    }
+
+    .breadcrumb-wrap i {
+      font-size: 0.65rem;
+      color: var(--border);
+    }
+
+    /* MAIN WRAP */
+    .main-wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    /* CONTACT INFO CARDS */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .info-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: all 0.3s;
+    }
+
+    .info-card:hover {
+      border-color: rgba(21, 101, 192, 0.2);
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .info-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(21, 101, 192, 0.1), rgba(0, 229, 255, 0.08));
+      border: 1px solid rgba(21, 101, 192, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      color: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .info-text strong {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--navy);
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    .info-text p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .info-text a {
+      color: var(--blue);
+      text-decoration: none;
+      font-size: 0.82rem;
+    }
+
+    .info-text a:hover {
+      text-decoration: underline;
+    }
+
+    /* Map */
+    .map-wrap {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .map-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 280px;
+    }
+
+    /* Section label */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: var(--blue);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 2rem;
+    }
+
+    .form-logo {
+      font-family: 'Fraunces', serif;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 2rem;
+    }
+
+    .form-logo span {
+      color: var(--accent);
+    }
+
+    /* FORM CARD */
+    .form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.25rem;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 88px;
+    }
+
+    .form-header {
+      margin-bottom: 1.75rem;
+    }
+
+    .form-header h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 0.35rem;
+    }
+
+    .form-header p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.45rem;
+    }
+
+    .form-group label span {
+      color: #EF4444;
+      margin-left: 2px;
+    }
+
+    .form-control {
+      width: 100%;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 0.72rem 1rem;
+      font-family: inherit;
+      font-size: 0.875rem;
+      color: var(--navy);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-control::placeholder {
+      color: #B0BEC5;
+    }
+
+    .form-control:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+      background: white;
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-with-icon .form-control {
+      padding-left: 2.6rem;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .input-with-icon textarea~.input-icon {
+      top: 1rem;
+      transform: none;
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+      padding-top: 0.75rem;
+    }
+
+    /* Topic select */
+    .topic-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .topic-btn {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.55rem 0.75rem;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .topic-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      background: rgba(21, 101, 192, 0.05);
+    }
+
+    .topic-btn.selected {
+      border-color: var(--blue);
+      color: var(--blue);
+      background: rgba(21, 101, 192, 0.08);
+    }
+
+    .topic-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(135deg, var(--blue-mid), var(--blue-light));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(21, 101, 192, 0.35);
+    }
+
+    /* Success state */
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #DCFCE7, #A7F3D0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: #16A34A;
+      margin: 0 auto 1rem;
+    }
+
+    .success-msg h4 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .success-msg p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    .faq-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .faq-item:hover {
+      border-color: rgba(21, 101, 192, 0.2);
+    }
+
+    .faq-q {
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy);
+      gap: 1rem;
+    }
+
+    .faq-q i {
+      color: var(--blue);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+
+    .faq-a {
+      display: none;
+      padding: 0 1.25rem 1rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      border-top: 1px solid var(--border);
+      padding-top: 0.85rem;
+    }
+
+    .faq-item.open .faq-a {
+      display: block;
+    }
+
+    .faq-item.open .faq-q i {
+      transform: rotate(180deg);
+    }
+
+    .faq-item.open {
+      border-color: rgba(21, 101, 192, 0.2);
+      box-shadow: var(--shadow);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--navy);
+      color: rgba(255, 255, 255, 0.6);
+      padding: 3rem 2rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: white;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-brand span {
+      color: var(--accent);
+    }
+
+    .footer-brand-desc {
+      font-size: 0.84rem;
+      line-height: 1.65;
+      max-width: 280px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
+    }
+
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .social-btn:hover {
+      background: rgba(0, 229, 255, 0.12);
+      border-color: rgba(0, 229, 255, 0.3);
+      color: var(--accent);
+    }
+
+    .footer-col-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.84rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 22, 40, 0.98);
+      z-index: 2000;
+      padding: 2rem;
+      flex-direction: column;
+      gap: 1rem;
+      overflow-y: auto;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .mobile-menu a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 600;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .mobile-cta {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .main-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .form-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .nav-links,
+      .nav-right {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topic-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .main-wrap {
+        padding: 0 1.5rem 3rem;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a class="nav-brand">NA<span>LLET</span></a>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="beranda2.html">Beranda</a></li>
+        <li><a href="berita2.html">Berita Terbaru</a></li>
+        <li><a href="#" class="active">Kontak Kami</a></li>
+      </ul>
+      </li>
+      </ul>
+
+      <div class="nav-right">
+        <button class="nav-bell">
+          <i class="bi bi-bell-fill"></i>
+        </button>
+        <a href="dashboard.html" class="nav-profile">
+          <div class="nav-avatar">
+            <img src="saya.jpg" alt="Diana" onerror="this.style.display='none';this.parentElement.textContent='DT'">
+          </div>
+          <div class="nav-profile-info">
+            <span class="nav-profile-name">Diana Tri Asih</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" onclick="toggleMenu()"><i class="bi bi-x"></i></button>
+    <a href="beranda.html"
+      style="font-family:'Fraunces',serif;font-size:1.5rem;border-bottom:none;margin-bottom:0.5rem;">NALLET</a>
+    <a href="beranda.html">Beranda</a>
+    <a href="berita.html">Berita Terbaru</a>
+    <a href="kontak.html">Kontak Kami</a>
+    <div class="mobile-cta">
+      <a href="masuk.html" class="btn-ghost" style="flex:1;text-align:center;">Masuk</a>
+      <a href="daftar.html" class="btn-accent" style="flex:1;text-align:center;">Daftar</a>
+    </div>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-inner">
+      <div class="page-badge"><i class="bi bi-headset" style="font-size:0.7rem;"></i> Kami Siap Membantu</div>
+      <h1 class="page-title">Hubungi Tim <i class="form-logo">NA<span>LLET</span></i></h1>
+      <p class="page-sub">Ada pertanyaan, saran, atau butuh bantuan? Tim kami siap merespons dalam waktu 1x24 jam kerja.
+      </p>
+    </div>
+  </section>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-wrap">
+    <!-- <a href="beranda.html"><i class="bi bi-house-fill"></i> Beranda</a>
+    <i class="bi bi-chevron-right"></i>
+    <span>Kontak Kami</span> -->
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-wrap">
+
+    <!-- Info + Map + FAQ -->
+    <div>
+      <div class="section-label">Informasi Kontak</div>
+      <h2 class="section-title">Temukan Kami di Sini</h2>
+      <p class="section-sub">Pilih cara yang paling nyaman untuk menghubungi kami. Kami selalu siap membantu Anda.</p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+          <div class="info-text">
+            <strong>Alamat Kantor</strong>
+            <p>Jl. Sudirman No. 88<br>Jakarta Pusat 10220</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon"><i class="bi bi-telephone-fill"></i></div>
+          <div class="info-text">
+            <strong>Telepon</strong>
+            <p><a href="tel:+622155551234">+62 21 5555 1234</a></p>
+            <p style="margin-top:0.15rem;">Senin-Jumat, 08.00-17.00 WIB</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon"><i class="bi bi-envelope-fill"></i></div>
+          <div class="info-text">
+            <strong>Email</strong>
+            <p><a href="mailto:support@nallet.id">support@nallet.id</a></p>
+            <p style="margin-top:0.15rem;">Respons dalam 1x24 jam</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon"><i class="bi bi-whatsapp"></i></div>
+          <div class="info-text">
+            <strong>WhatsApp</strong>
+            <p><a href="#">+62 812 3456 7890</a></p>
+            <p style="margin-top:0.15rem;">Chat langsung tersedia</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="map-wrap">
+        <iframe src="https://maps.google.com/maps?q=jakarta+pusat&t=&z=14&ie=UTF8&iwloc=&output=embed"
+          title="Lokasi Kantor NALLET" allowfullscreen loading="lazy">
+        </iframe>
+      </div>
+
+      <!-- FAQ -->
+      <div class="section-label" style="margin-top:2.5rem;">FAQ</div>
+      <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Berapa lama waktu respons tim dukungan NALLET?
+            <i class="bi bi-chevron-down"></i>
+          </div>
+          <div class="faq-a">Tim kami berkomitmen untuk merespons setiap pertanyaan dalam waktu 1x24 jam kerja. Untuk
+            pertanyaan mendesak, Anda dapat menghubungi kami melalui WhatsApp untuk respons yang lebih cepat.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Apakah ada biaya untuk menghubungi tim dukungan?
+            <i class="bi bi-chevron-down"></i>
+          </div>
+          <div class="faq-a">Tidak ada biaya apapun untuk menghubungi tim dukungan kami. Layanan dukungan pelanggan
+            NALLET sepenuhnya gratis dan tersedia 24/7 untuk semua pengguna terdaftar.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Bagaimana cara melaporkan masalah teknis pada sistem?
+            <i class="bi bi-chevron-down"></i>
+          </div>
+          <div class="faq-a">Anda dapat melaporkan masalah teknis melalui formulir di halaman ini dengan memilih topik
+            "Masalah Teknis", atau kirim email langsung ke support@nallet.id dengan menyertakan tangkapan layar dan
+            deskripsi masalah yang Anda alami.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Apakah NALLET menyediakan demo produk?
+            <i class="bi bi-chevron-down"></i>
+          </div>
+          <div class="faq-a">Ya! Kami menyediakan demo produk gratis selama 30 menit bersama tim kami. Hubungi kami
+            melalui formulir ini atau email untuk menjadwalkan sesi demo yang sesuai dengan waktu Anda.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div>
+      <div class="form-card">
+        <div class="form-header">
+          <h3>Kirim Pesan</h3>
+          <p>Isi formulir di bawah ini dan kami akan segera menghubungi Anda.</p>
+        </div>
+
+        <div id="formContent">
+          <div class="form-group">
+            <label>Nama Lengkap <span>*</span></label>
+            <div class="input-with-icon">
+              <i class="bi bi-person-fill input-icon"></i>
+              <input type="text" class="form-control" placeholder="Masukkan nama lengkap Anda">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Alamat Email <span>*</span></label>
+            <div class="input-with-icon">
+              <i class="bi bi-envelope-fill input-icon"></i>
+              <input type="email" class="form-control" placeholder="nama@email.com">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Nomor Telepon</label>
+            <div class="input-with-icon">
+              <i class="bi bi-telephone-fill input-icon"></i>
+              <input type="tel" class="form-control" placeholder="+62 8xx xxxx xxxx">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Pesan <span>*</span></label>
+            <textarea class="form-control" rows="5" placeholder="Tulis pesan Anda di sini..."></textarea>
+          </div>
+
+          <!-- Checkbox -->
+          <label style="display:flex;align-items:flex-start;gap:0.6rem;cursor:pointer;margin-bottom:0.25rem;">
+            <input type="checkbox"
+              style="margin-top:3px;accent-color:var(--blue);width:15px;height:15px;flex-shrink:0;">
+            <span style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">
+              Saya setuju dengan <a href="#" style="color:var(--blue);">Kebijakan Privasi</a> dan bersedia dihubungi
+              oleh tim NALLET.
+            </span>
+          </label>
+
+          <button class="btn-submit" onclick="submitForm()">
+            <i class="bi bi-send-fill"></i> Kirim Pesan Sekarang
+          </button>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-msg" id="successMsg">
+          <div class="success-icon"><i class="bi bi-check-lg"></i></div>
+          <h4>Pesan Terkirim!</h4>
+          <p>Terima kasih telah menghubungi kami. Tim NALLET akan membalas pesan Anda dalam 1×24 jam kerja.</p>
+          <button onclick="resetForm()"
+            style="margin-top:1.25rem;background:none;border:1.5px solid var(--blue);color:var(--blue);border-radius:10px;padding:0.6rem 1.5rem;font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;">
+            Kirim Pesan Lain
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <span class="footer-brand">NA<span>LLET</span></span>
+          <p class="footer-brand-desc">Platform sistem informasi keuangan terpercaya yang membantu Anda mengelola
+            keuangan dengan lebih mudah, cepat, dan aman.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigasi</div>
+          <ul class="footer-links">
+            <li><a href="beranda.html">Beranda</a></li>
+            <li><a href="berita.html">Berita Terbaru</a></li>
+            <li><a href="#">Kontak Kami</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Produk</div>
+          <ul class="footer-links">
+            <li><a href="#">Laporan Keuangan</a></li>
+            <li><a href="#">Pengelolaan Anggaran</a></li>
+            <li><a href="#">Analisis Data</a></li>
+            <li><a href="#">Keamanan Data</a></li>
+            <li><a href="#">Notifikasi Cerdas</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 NALLET. Semua Hak Dilindungi.</p>
+        <p>Didesain oleh: <strong style="color:rgba(255,255,255,0.75);">Diana Tri Asih</strong></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    function selectTopic(btn) {
+      document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function toggleFaq(el) {
+      const item = el.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    function submitForm() {
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formContent').style.display = 'block';
+      document.getElementById('successMsg').style.display = 'none';
+    }
+
+    // Fade-in cards
+    const cards = document.querySelectorAll('.info-card, .faq-item');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '0';
+          entry.target.style.transform = 'translateY(16px)';
+          setTimeout(() => {
+            entry.target.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }, i * 80);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    cards.forEach(c => obs.observe(c));
+  </script>
+</body>
+
+</html>
